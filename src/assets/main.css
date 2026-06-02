@@ -1,0 +1,411 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #f0f2f5;
+    color: #333;
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* 顶部工具栏 */
+.toolbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 20px;
+    background: #fff;
+    border-bottom: 1px solid #e8e8e8;
+    flex-shrink: 0;
+}
+
+.toolbar .brand {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-right: auto;
+}
+
+.toolbar button {
+    padding: 8px 18px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-copy {
+    background: #07c160;
+    color: #fff;
+}
+
+.btn-copy:hover {
+    background: #06ad56;
+}
+
+.btn-copy:active {
+    transform: scale(0.96);
+}
+
+.btn-clear {
+    background: #f5f5f5;
+    color: #666;
+}
+
+.btn-clear:hover {
+    background: #e8e8e8;
+}
+
+.btn-width {
+    background: #f5f5f5;
+    color: #666;
+    min-width: 80px;
+}
+
+.btn-width:hover {
+    background: #e8e8e8;
+}
+
+.btn-width.active {
+    background: #e6f7ff;
+    color: #1890ff;
+}
+
+/* 主编辑区域 */
+.editor-main {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    gap: 0;
+    user-select: none;
+}
+
+/* 左侧编辑面板 */
+.editor-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #e8e8e8;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.editor-panel .panel-header {
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #999;
+    background: #fafafa;
+    border-bottom: 1px solid #e8e8e8;
+    flex-shrink: 0;
+}
+
+.editor-panel textarea {
+    flex: 1;
+    width: 100%;
+    padding: 20px;
+    border: none;
+    outline: none;
+    resize: none;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #333;
+    background: #fff;
+}
+
+.editor-panel textarea::placeholder {
+    color: #bbb;
+}
+
+/* 右侧预览面板 */
+.preview-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #e8e8e8;
+    align-items: center;
+    overflow-y: auto;
+    padding: 20px 0;
+}
+
+.preview-panel .panel-header {
+    width: 100%;
+    max-width: 420px;
+    padding: 0 16px 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #999;
+    flex-shrink: 0;
+    text-align: center;
+}
+
+.preview-wrapper {
+    width: 420px;
+    background: #fff;
+    padding: 24px 20px;
+    border-radius: 4px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    transition: width 0.3s ease;
+}
+
+.preview-wrapper.mobile {
+    width: 375px;
+}
+
+/* Toast 提示 */
+.toast {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: #fff;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    z-index: 9999;
+    animation: toastIn 0.3s ease;
+}
+
+@keyframes toastIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+/* ==================== 工具栏样式 ==================== */
+.md-toolbar {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2px;
+    padding: 6px 10px;
+    background: #fafafa;
+    border-bottom: 1px solid #e8e8e8;
+    flex-shrink: 0;
+}
+
+.tb-btn {
+    width: 32px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background: transparent;
+    cursor: pointer;
+    font-size: 13px;
+    color: #555;
+    transition: all 0.15s;
+}
+
+.tb-btn:hover {
+    background: #e8e8e8;
+    color: #333;
+}
+
+.tb-btn:active {
+    background: #d9d9d9;
+}
+
+.tb-divider {
+    width: 1px;
+    height: 20px;
+    background: #e0e0e0;
+    margin: 0 4px;
+}
+
+/* 代码块下拉 */
+.tb-dropdown {
+    position: relative;
+}
+
+.tb-code-btn {
+    width: auto;
+    padding: 0 10px;
+    white-space: nowrap;
+}
+
+.tb-dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 100;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    min-width: 140px;
+    max-height: 280px;
+    overflow-y: auto;
+    padding: 4px 0;
+}
+
+.tb-dropdown:hover .tb-dropdown-menu {
+    display: block;
+}
+
+.tb-dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 7px 16px;
+    border: none;
+    background: transparent;
+    font-size: 13px;
+    color: #333;
+    text-align: left;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.tb-dropdown-item:hover {
+    background: #f0f0f0;
+    color: #1890ff;
+}
+
+/* ==================== 查找替换面板样式 ==================== */
+.search-replace-bar {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 8px 12px;
+    background: #fffbe6;
+    border-bottom: 1px solid #ffe58f;
+    flex-shrink: 0;
+}
+
+.sr-close {
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    color: #999;
+    cursor: pointer;
+    border-radius: 3px;
+    flex-shrink: 0;
+}
+
+.sr-close:hover {
+    background: #fff1b8;
+    color: #d46b08;
+}
+
+.sr-row {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+}
+
+.sr-label {
+    font-size: 12px;
+    color: #888;
+    min-width: 28px;
+}
+
+.sr-input {
+    width: 160px;
+    padding: 4px 8px;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.sr-input:focus {
+    border-color: #ffa940;
+}
+
+.sr-count {
+    font-size: 11px;
+    color: #aaa;
+    white-space: nowrap;
+    margin-left: 2px;
+}
+
+.sr-actions {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+}
+
+.sr-btn {
+    padding: 4px 10px;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    background: #fff;
+    font-size: 12px;
+    cursor: pointer;
+    color: #555;
+    white-space: nowrap;
+    transition: all 0.15s;
+}
+
+.sr-btn:hover {
+    border-color: #ffa940;
+    color: #d46b08;
+}
+
+.sr-btn-replace {
+    color: #d46b08;
+    font-weight: 600;
+}
+
+.sr-btn-replace-all {
+    background: #fff7e6;
+    color: #d46b08;
+    font-weight: 600;
+}
+
+.sr-btn-replace-all:hover {
+    background: #ffe7ba;
+}
+
+/* 查找按钮激活态 */
+.tb-btn-active {
+    background: #fff1b8 !important;
+    color: #d46b08 !important;
+}
+
+/* ==================== 拖拽分栏手柄 ==================== */
+.drag-handle {
+    width: 6px;
+    flex-shrink: 0;
+    cursor: col-resize;
+    background: transparent;
+    transition: background 0.2s;
+    position: relative;
+    z-index: 10;
+}
+
+.drag-handle:hover,
+.drag-handle:active {
+    background: #1890ff;
+}
+
+/* 拖拽中禁止文本选中（全局） */
+body.dragging {
+    user-select: none !important;
+    cursor: col-resize !important;
+}
